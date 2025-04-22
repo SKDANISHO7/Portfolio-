@@ -157,3 +157,45 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
+
+// Progress bar animation for Resume section
+document.addEventListener('DOMContentLoaded', function() {
+  // Get all nav links
+  const navLinks = document.querySelectorAll('[data-nav-link]');
+  const progressBars = document.querySelectorAll('.skill-progress-fill');
+
+  // Reset progress bars
+  function resetProgressBars() {
+    progressBars.forEach(bar => {
+      bar.style.width = '0%';
+    });
+  }
+
+  // Animate progress bars
+  function animateProgressBars() {
+    progressBars.forEach(bar => {
+      const progress = bar.getAttribute('data-progress') || bar.getAttribute('data-width');
+      // Start animation
+      setTimeout(() => {
+        bar.style.transition = 'width 1s ease-in-out';
+        bar.style.width = progress;
+      }, 200);
+    });
+  }
+
+  // Handle page changes
+  navLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      // Check if clicking Resume section
+      if (this.textContent.trim() === 'Resume') {
+        resetProgressBars();
+        setTimeout(animateProgressBars, 300);
+      }
+    });
+  });
+
+  // Initial animation if Resume page is active
+  if (document.querySelector('.resume.active')) {
+    setTimeout(animateProgressBars, 300);
+  }
+});
